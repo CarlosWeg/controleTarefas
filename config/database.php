@@ -6,7 +6,7 @@
         private $sPort = '5432';
         private $sUsername = 'postgres';
         private $sPassword = 'postgres';
-        private $sDbName = 'to_do_list';
+        private $sDbName = 'lista_tarefas';
         private $oConexao;
 
         public function connectarBD(){
@@ -15,14 +15,32 @@
                          user = $sUsername;
                          password = $sPassowrd;
                          dbname = $sDbName";
-            pg_connect($sConexao);
+
+            $this->conexao = pg_connect($sConexao);
         }
 
         public function obterConexao(){
             if ($this->oConexao === null){ 
-                $this->oConexao = $this->conectarBD();
+                $this->conectarBD();
             }
             return $this->oConexao;
+        }
+
+        public function executarConsulta($sConsulta){
+            $oResultado = pg_query($this->obterConexao(), $sConsulta);
+            $aData = [];
+
+            while ($aResultado = pg_fetch_assoc($oResultado)){
+                $aData[] = $aResultado;
+            }
+
+            return $aData;
+
+        }
+
+        public function executarComando($sComando){
+            pg_escape_string($sComando);
+            return pg_query($this->obterConexao(),$sComando);
         }
 
     }
