@@ -12,6 +12,12 @@
 <head>
     <meta charset = "UTF-8">
     <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+    <style>
+        th,tr,td{
+            border: 1px solid grey;
+            padding: 8px;
+        }
+    </style>
     <title>Controle de tarefas</title>
 </head>
 
@@ -22,7 +28,7 @@
     <form action = "../public/index.php?operacao=criarTarefa" method = "POST">
 
         <input type = "text" name = "descricao" id = "descricao" required>
-        <input type = "submit" value = "Enviar!">
+        <input type = "submit" value = "Criar!">
 
     </form>
 
