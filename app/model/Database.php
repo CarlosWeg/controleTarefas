@@ -1,34 +1,36 @@
 <?php
 
-    require_once __DIR__ . '/../config/autoload.php';
+    namespace App\Model;
+
+    require_once '../config/autoload.php';
 
     class Database{
-        private $sHost = '127.0.0.1';
+        private $sHost = 'localhost';
         private $sPort = '5432';
         private $sUsername = 'postgres';
         private $sPassword = 'postgres';
         private $sDbName = 'lista_tarefas';
         private $oConexao;
 
-        public function connectarBD(){
-            $sConexao = "host = $sHost;
-                         port = $sPort;
-                         user = $sUsername;
-                         password = $sPassowrd;
-                         dbname = $sDbName";
+        public function conectarBD(){
+            $sConexao = "host = $this->sHost
+                         port = $this->sPort
+                         user = $this->sUsername
+                         password = $this->sPassword
+                         dbname = $this->sDbName";
 
-            $this->conexao = pg_connect($sConexao);
+            $this->oConexao = pg_connect($sConexao);
         }
 
         public function obterConexao(){
             if ($this->oConexao === null){ 
                 $this->conectarBD();
             }
-            return $this->oConexao;
         }
 
         public function executarConsulta($sConsulta){
-            $oResultado = pg_query($this->obterConexao(), $sConsulta);
+            $this->obterConexao();
+            $oResultado = pg_query($this->oConexao, $sConsulta);
             $aData = [];
 
             while ($aResultado = pg_fetch_assoc($oResultado)){
@@ -40,8 +42,9 @@
         }
 
         public function executarComando($sComando){
+            $this->obterConexao();
             pg_escape_string($sComando);
-            return pg_query($this->obterConexao(),$sComando);
+            return pg_query($this->oConexao,$sComando);
         }
 
     }

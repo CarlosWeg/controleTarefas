@@ -1,6 +1,8 @@
 <?php
 
-    require_once __DIR__ . '/../config/autoload.php';
+    namespace App\View;
+
+    require_once '../config/autoload.php';
 
 ?>
 
@@ -17,7 +19,7 @@
 
     <h1>Cadastrar nova tarefa</h2>
     
-    <form method = "POST" action = "..public/index.php?operacao=criarTarefa">
+    <form action = "../public/index.php?operacao=criarTarefa" method = "POST">
 
         <input type = "text" name = "descricao" id = "descricao" required>
         <input type = "submit" value = "Enviar!">
@@ -36,12 +38,12 @@
         <?php
 
             foreach ($aTarefas as $tarefa){
-                if (!$tarefa['status']){
+                if ($tarefa['status'] == 'f'){
                     echo '<tr>';
                     echo '<td>' . $tarefa['descricao'] . '</td>';
-                    echo '<td>' . $tarefa['status'] . '</td>';
-                    echo '<td><a href = "public.index.php?operacao=removerTarefa&id=' . $tarefa['id'] . '">Remover</a></td>';
-                    echo '<td><a href = "public.index.php?operacao=atualizarTarefa&id=' . $tarefa['id'] .'">Atualizar Status</a></td>';
+                    echo '<td>Pendente</td>';
+                    echo '<td><a href = "index.php?operacao=removerTarefa&id=' . $tarefa['id'] . '">Remover</a></td>';
+                    echo '<td><a href = "index.php?operacao=atualizarTarefa&id=' . $tarefa['id'] .'">Atualizar Status</a></td>';
                     echo '</tr>';
                 }
             }
@@ -63,12 +65,12 @@
         <?php
 
             foreach ($aTarefas as $tarefa){
-                if ($tarefa['status']){
+                if ($tarefa['status'] == 't'){
                     echo '<tr>';
                     echo '<td>' . $tarefa['descricao'] . '</td>';
-                    echo '<td>' . $tarefa['status'] . '</td>';
-                    echo '<td><a href = "public.index.php?operacao=removerTarefa&id=' . $tarefa['id'] . '">Remover</a></td>';
-                    echo '<td><a href = "public.index.php?operacao=atualizarTarefa&id=' . $tarefa['id'] .'">Atualizar Status</a></td>';
+                    echo '<td>Concluída</td>';
+                    echo '<td><a href = "index.php?operacao=removerTarefa&id=' . $tarefa['id'] . '">Remover</a></td>';
+                    echo '<td><a href = "index.php?operacao=atualizarTarefa&id=' . $tarefa['id'] .'">Atualizar Status</a></td>';
                     echo '</tr>';
                 }
             }

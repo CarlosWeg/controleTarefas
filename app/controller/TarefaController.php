@@ -1,6 +1,9 @@
 <?php
 
-    require_once __DIR__ . '/../config/autoload.php';
+    namespace App\Controller;
+    use App\Model\Tarefa;
+
+    require_once '../config/autoload.php';
 
     class TarefaController{
         private $tarefa;
@@ -10,7 +13,7 @@
         }
 
         public function listarTarefas(){
-            return $this->tarefa->obterTarefas();
+            return $this->tarefa->listar();
         }
 
         public function criarTarefa($sDescricao){
@@ -21,8 +24,8 @@
             $this->tarefa->deletar($id);
         }
 
-        public function atualizarStatus(){
-            $this->tarefa->atualizar();
+        public function atualizarStatus($id){
+            $this->tarefa->atualizar($id);
         }
 
     }

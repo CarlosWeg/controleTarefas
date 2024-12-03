@@ -1,6 +1,10 @@
 <?php
 
-    require_once __DIR__ . '/../config/autoload.php';
+    namespace App\Model;
+
+    use App\Model\Database;
+
+    require_once '../config/autoload.php';
 
     class Tarefa{
         private $oDataBase;
@@ -15,26 +19,28 @@
                                  STATUS
                             FROM TBTAREFA";
 
-            $this->oDataBase->executarConsulta($sConsulta);
+            return $this->oDataBase->executarConsulta($sConsulta);
         }
 
         public function criar($sDescricao){
+            pg_escape_string($sDescricao);
             $sComando = "INSERT INTO TBTAREFA
                                 (DESCRICAO)
-                         VALUES ($sDescricao";
+                         VALUES ('$sDescricao')";
+            $this->oDataBase->executarComando($sComando);
         }
 
         public function atualizar($id){
             $sComando = "UPDATE TBTAREFA
                             SET STATUS = NOT STATUS
-                          WHERE ID = $ID";
+                          WHERE ID = $id";
             
             $this->oDataBase->executarComando($sComando);
         }
 
         public function deletar($id){
             $sComando = "DELETE FROM TBTAREFA
-                          WHERE ID = $ID";
+                          WHERE ID = $id";
             
             $this->oDataBase->executarComando($sComando);
         }
