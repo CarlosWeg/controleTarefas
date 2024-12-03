@@ -1,5 +1,6 @@
 <?php
 
+    require_once __DIR__ . '/../config/autoload.php';
 
     class Database{
         private $sHost = '127.0.0.1';
